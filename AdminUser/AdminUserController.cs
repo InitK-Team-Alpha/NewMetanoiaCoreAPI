@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MetanoiaCoreAPI.Infa;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,10 +12,9 @@ namespace MetanoiaCoreAPI.AdminUser
     public class AdminUserController : ControllerBase
     {
 
-        private readonly AdminUserContext _context;
-        public AdminUserController(AdminUserContext context)
+        private readonly AppDBContext _context;
+        public AdminUserController(AppDBContext context)
         {
-            Console.WriteLine("called");
             _context = context;
         }
         [HttpPost]
@@ -25,7 +25,7 @@ namespace MetanoiaCoreAPI.AdminUser
 
             // return CreatedAtAction(nameof(GetAdminUserDTO), new { id = adminUserDTO.ID }, adminUserDTO);
             Console.WriteLine(adminUserDTO);
-            return Ok();
+            return Ok(adminUserDTO);
         }
 
 
@@ -33,14 +33,8 @@ namespace MetanoiaCoreAPI.AdminUser
 
         public async Task<ActionResult<AdminUserDTO>> GetAdminUsersDTO(long id)
         {
-            // var adminUserDTO = await _context.AdminUserDTOs.FindAsync(id);
-            // if (adminUserDTO == null)
-            // {
-            //     return NotFound();
-            // }
 
-            // return adminUserDTO;
-            return Ok();
+            return Ok(id);
         }
         [HttpDelete("{id}")]
 
@@ -56,8 +50,6 @@ namespace MetanoiaCoreAPI.AdminUser
 
             return adminUserDTO;
         }
-        // Console.WriteLine("adminUserDTO");
-        // return Accepted();
 
 
         [HttpPut("{id}")]
@@ -88,7 +80,6 @@ namespace MetanoiaCoreAPI.AdminUser
             return NoContent();
 
         }
-
         private bool AdminUserDTOExists(long id)
         {
             throw new NotImplementedException();
