@@ -17,16 +17,15 @@ namespace MetanoiaCoreAPI.AdminUser
         private readonly AppDBContext _context;
         public UserPsychologyCausesController(AppDBContext context)
         {
-            Console.WriteLine("called");
+            //Console.WriteLine("called");
             _context = context;
         }
         [HttpPost]
         public ActionResult PostAdminUser([FromBody] UserPsychologyCauses userPsychologyCauses)
         {
-            // await _context.AdminUserDTOs.AddAsync(adminUserDTO);
-            // await _context.SaveChangesAsync();
 
-            Console.WriteLine("Accepted");
+
+            Console.WriteLine("Post");
             return Ok(userPsychologyCauses);
 
         }
@@ -36,57 +35,30 @@ namespace MetanoiaCoreAPI.AdminUser
 
         public ActionResult GetAdminUsersDTO([FromQuery] long id)
         {
-            Console.WriteLine("Accepted");
+            Console.WriteLine("Get");
             return Ok();
-            // return _context.AdminUserDTOs.ToList();
+
         }
 
 
-        // [HttpDelete("{id}")]
+        [HttpDelete]
 
-        // public async Task<ActionResult<AdminUserDTO>> DeleteAdminUser(long id)
-        // {
-        //     var adminUserDTO = await _context.AdminUserDTOs.FindAsync(id);
-        //     if (adminUserDTO == null)
-        //     {
-        //         return NotFound();
-        //     }
-        //     _context.AdminUserDTOs.Remove(adminUserDTO);
-        //     await _context.SaveChangesAsync();
-
-        //     return adminUserDTO;
-        // }
+        public ActionResult DeleteAdminUser([FromQuery] long id)
+        {
+            Console.WriteLine("Delelte");
+            return Ok(id);
+        }
 
 
 
-        // [HttpPut("{id}")]
-        // public async Task<IActionResult> PutAdminUser(long id, AdminUserDTO adminUserDTO)
-        // {
-        //     if (id != adminUserDTO.ID)
-        //     {
-        //         return BadRequest();
-        //     }
-        //     _context.Entry(adminUserDTO).State = EntityState.Modified;
+        [HttpPut]
+        public IActionResult PutAdminUser([FromQuery] long id)
+        {
+            Console.WriteLine("Put");
+            return Ok();
 
-        //     try
-        //     {
-        //         await _context.SaveChangesAsync();
-        //     }
-        //     catch (DbUpdateConcurrencyException)
-        //     {
-        //         if (!AdminUserDTOExists(id))
-        //         {
-        //             return NotFound();
 
-        //         }
-        //         else
-        //         {
-        //             throw;
-        //         }
-        //     }
-        //     return NoContent();
-
-        // }
+        }
 
 
     }

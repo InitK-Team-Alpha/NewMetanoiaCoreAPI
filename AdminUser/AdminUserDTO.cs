@@ -23,7 +23,7 @@ namespace MetanoiaCoreAPI.AdminUser
 
         public AdminRole Role { get; set; }
 
-        
+
     }
 
     public class AdminUserConfiguration : IEntityTypeConfiguration<AdminUserDTO>
@@ -40,6 +40,5 @@ namespace MetanoiaCoreAPI.AdminUser
             builder.Property(p => p.Role).HasColumnType("varchar(10)").IsRequired();
         }
     }
-
 
 }
