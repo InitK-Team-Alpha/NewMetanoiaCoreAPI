@@ -20,7 +20,7 @@ namespace MetanoiaCoreAPI.Infa
 
         DbSet<AppUserDTO> AppUsers { get; set; }
 
-        DbSet<AdminUserDTO> AdminUsers { get; set; }
+        DbSet<AdminUserDTO> AdminUserDTOs { get; set; }
 
 
     }
