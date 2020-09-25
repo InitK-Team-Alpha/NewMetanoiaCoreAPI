@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MetanoiaCoreAPI.Infa;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,8 +12,8 @@ namespace MetanoiaCoreAPI.AdminUser
     public class AdminUserController : ControllerBase
     {
 
-        private readonly AdminUserContext _context;
-        public AdminUserController(AdminUserContext context)
+        private readonly AppDBContext _context;
+        public AdminUserController(AppDBContext context)
         {
             Console.WriteLine("called");
             _context = context;
@@ -20,12 +21,8 @@ namespace MetanoiaCoreAPI.AdminUser
         [HttpPost]
         public ActionResult PostAdminUser([FromBody] AdminUserDTO adminUserDTO)
         {
-            // _context.AdminUserDTOs.Add(adminUserDTO);
-            // await _context.SaveChangesAsync();
-
-            // return CreatedAtAction(nameof(GetAdminUserDTO), new { id = adminUserDTO.ID }, adminUserDTO);
-            Console.WriteLine(adminUserDTO);
-            return Ok();
+           Console.WriteLine("Post Method");
+            return Ok(adminUserDTO);
         }
 
 
@@ -33,59 +30,28 @@ namespace MetanoiaCoreAPI.AdminUser
 
         public async Task<ActionResult<AdminUserDTO>> GetAdminUsersDTO(long id)
         {
-            // var adminUserDTO = await _context.AdminUserDTOs.FindAsync(id);
-            // if (adminUserDTO == null)
-            // {
-            //     return NotFound();
-            // }
-
-            // return adminUserDTO;
-            return Ok();
+           
+            Console.WriteLine("Get Method");
+            return Ok(id);
         }
-        [HttpDelete("{id}")]
+        [HttpDelete]
 
         public async Task<ActionResult<AdminUserDTO>> DeleteAdminUser(long id)
         {
-            var adminUserDTO = await _context.AdminUserDTOs.FindAsync(id);
-            if (adminUserDTO == null)
-            {
-                return NotFound();
-            }
-            _context.AdminUserDTOs.Remove(adminUserDTO);
-            await _context.SaveChangesAsync();
+            
+            
+            Console.WriteLine("Delete Method");
+            return Ok();
 
-            return adminUserDTO;
         }
-        // Console.WriteLine("adminUserDTO");
-        // return Accepted();
+        
 
-
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> PutAdminUser(long id, AdminUserDTO adminUserDTO)
         {
-            if (id != adminUserDTO.ID)
-            {
-                return BadRequest();
-            }
-            _context.Entry(adminUserDTO).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AdminUserDTOExists(id))
-                {
-                    return NotFound();
-
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            return NoContent();
+            
+            Console.WriteLine("Put Method");
+            return Ok();
 
         }
 
