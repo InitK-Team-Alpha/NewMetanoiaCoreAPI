@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Thet Thet Wai\\Desktop\\Project Metanoia_2\\test_project2\\test_project2.csproj": {}
+    "C:\\Users\\Thet Thet Wai\\Desktop\\Project Metanoia\\NewMetanoiaCoreAPI\\test_project2.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Thet Thet Wai\\Desktop\\Project Metanoia_2\\test_project2\\test_project2.csproj": {
+    "C:\\Users\\Thet Thet Wai\\Desktop\\Project Metanoia\\NewMetanoiaCoreAPI\\test_project2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Thet Thet Wai\\Desktop\\Project Metanoia_2\\test_project2\\test_project2.csproj",
+        "projectUniqueName": "C:\\Users\\Thet Thet Wai\\Desktop\\Project Metanoia\\NewMetanoiaCoreAPI\\test_project2.csproj",
         "projectName": "test_project2",
-        "projectPath": "C:\\Users\\Thet Thet Wai\\Desktop\\Project Metanoia_2\\test_project2\\test_project2.csproj",
+        "projectPath": "C:\\Users\\Thet Thet Wai\\Desktop\\Project Metanoia\\NewMetanoiaCoreAPI\\test_project2.csproj",
         "packagesPath": "C:\\Users\\Thet Thet Wai\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Thet Thet Wai\\Desktop\\Project Metanoia_2\\test_project2\\obj\\",
+        "outputPath": "C:\\Users\\Thet Thet Wai\\Desktop\\Project Metanoia\\NewMetanoiaCoreAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Thet Thet Wai\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -40,19 +40,19 @@
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.1.8, )"
+              "version": "[5.0.0-rc.1.20451.13, )"
             },
             "Microsoft.EntityFrameworkCore.InMemory": {
               "target": "Package",
-              "version": "[3.1.8, )"
+              "version": "[5.0.0-rc.1.20451.13, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[3.1.8, )"
+              "version": "[5.0.0-rc.1.20451.13, )"
             },
-            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+            "Microsoft.EntityFrameworkCore.Sqlite": {
               "target": "Package",
-              "version": "[3.1.4, )"
+              "version": "[5.0.0-rc.1.20451.13, )"
             }
           },
           "imports": [

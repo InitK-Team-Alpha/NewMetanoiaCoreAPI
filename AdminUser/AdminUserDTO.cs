@@ -23,10 +23,7 @@ namespace MetanoiaCoreAPI.AdminUser
 
         public AdminRole Role { get; set; }
 
-        internal static List<AdminUserDTO> ToList()
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 
     public class AdminUserConfiguration : IEntityTypeConfiguration<AdminUserDTO>
