@@ -18,9 +18,13 @@ namespace MetanoiaCoreAPI.Infa
             base.OnModelCreating(modelBuilder);
         }
 
-        DbSet<AppUserDTO> AppUsers { get; set; }
+        public DbSet<AppUserDTO> AppUserDTOs { get; set; }
 
-        DbSet<AdminUserDTO> AdminUserDTOs { get; set; }
+        public DbSet<AdminUserDTO> AdminUserDTOs { get; set; }
+
+        public DbSet<UserPsychologyCauses> UserPsychologyCausess {get;set;}
+
+        public DbSet<UserPsychologyEffects> UserPsychologyEffectss {get; set;}
 
 
     }

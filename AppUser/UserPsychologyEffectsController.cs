@@ -21,29 +21,31 @@ namespace MetanoiaCoreAPI.AdminUser
             _context = context;
         }
         [HttpPost]
-        public ActionResult PostAdminUser([FromBody] UserPsychologyEffects userPsychologyEffects)
+         public async Task<String> PostUserPEffects([FromBody] UserPsychologyEffects userPsychologyEffect)
         {
 
+            await _context.UserPsychologyEffectss.AddAsync(userPsychologyEffect);
+            await _context.SaveChangesAsync();
 
-            Console.WriteLine("Post");
-            return Ok(userPsychologyEffects); ;
+            return "Ok";
 
         }
+        
 
 
         [HttpGet]
 
-        public ActionResult GetAdminUsersDTO([FromQuery] long id)
-        {
-            Console.WriteLine("Get");
-            return Ok();
-
-        }
+         public List<UserPsychologyEffects> GetUserPEffects()
+         {
+            //  Console.WriteLine("Get");
+            //  return Ok();
+              return _context.UserPsychologyEffectss.ToList();
+         }
 
 
         [HttpDelete]
 
-        public ActionResult DeleteAdminUser(long id)
+        public ActionResult DeleteUserPEffects(long id)
         {
             Console.WriteLine("Delelte");
             return Ok(id);
@@ -53,7 +55,7 @@ namespace MetanoiaCoreAPI.AdminUser
 
 
         [HttpPut]
-        public IActionResult PutAdminUser([FromQuery] long id)
+        public IActionResult PutUserPEffects([FromQuery] long id)
         {
             Console.WriteLine("Put");
             return Ok();

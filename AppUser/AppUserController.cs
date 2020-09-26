@@ -20,30 +20,34 @@ namespace MetanoiaCoreAPI.AdminUser
             //Console.WriteLine("called");
             _context = context;
         }
-        [HttpPost]
-        public ActionResult PostAdminUser([FromBody] AppUserDTO appUserDTO)
-        {
+         [HttpPost]
+         public async Task<String> PostAppUser([FromBody] AppUserDTO appUserDTO)
+         {
 
+             await _context.AppUserDTOs.AddAsync(appUserDTO);
+             await _context.SaveChangesAsync();
+            
+             Console.WriteLine("AppUser Post");
+             return "Ok"; 
 
-            Console.WriteLine("Post");
-            return Ok(appUserDTO); ;
-
-        }
+         }
+        
 
 
         [HttpGet]
 
-        public ActionResult GetAdminUsersDTO([FromBody] AppUserDTO appUserDTO)
+        public List<AppUserDTO> GetAppUsersDTO()
         {
-            Console.WriteLine("Get");
-            return Ok(appUserDTO);
+             Console.WriteLine("AppUser Get");
+            // return Ok(appUserDTO);
+            return _context.AppUserDTOs.ToList();
 
         }
 
 
         [HttpDelete]
 
-        public ActionResult DeleteAdminUser([FromQuery] long id)
+        public ActionResult DeleteAppUser([FromQuery] long id)
         {
             Console.WriteLine("Delelte");
             return Ok(id);
@@ -53,7 +57,7 @@ namespace MetanoiaCoreAPI.AdminUser
 
 
         [HttpPut]
-        public IActionResult PutAdminUser([FromQuery] long id)
+        public IActionResult PutAppUser([FromQuery] long id)
         {
             Console.WriteLine("Put");
             return Ok();

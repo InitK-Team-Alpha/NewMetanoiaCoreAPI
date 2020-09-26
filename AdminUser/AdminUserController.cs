@@ -20,24 +20,24 @@ namespace MetanoiaCoreAPI.AdminUser
             _context = context;
         }
         [HttpPost]
-        public ActionResult PostAdminUser([FromBody] AdminUserDTO adminUserDTO)
+        public async Task<String> PostAdminUser([FromBody] AdminUserDTO adminUserDTO)
         {
-            // await _context.AdminUserDTOs.AddAsync(adminUserDTO);
-            // await _context.SaveChangesAsync();
+             await _context.AdminUserDTOs.AddAsync(adminUserDTO);
+             await _context.SaveChangesAsync();
 
-            Console.WriteLine("Post");
-            return Ok(adminUserDTO);;
+            
+            return "Ok";
 
         }
 
 
         [HttpGet]
 
-         public ActionResult GetAdminUsersDTO([FromQuery] long id)
+         public List<AdminUserDTO> GetAdminUsersDTO()
          {
-             Console.WriteLine("Get");
-             return Ok();
-             // return _context.AdminUserDTOs.ToList();
+            //  Console.WriteLine("Get");
+            //  return Ok();
+              return _context.AdminUserDTOs.ToList();
          }
          
 
