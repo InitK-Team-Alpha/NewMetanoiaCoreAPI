@@ -3,14 +3,16 @@ using System;
 using MetanoiaCoreAPI.Infa;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace test_project2.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AdminUserContextModelSnapshot : ModelSnapshot
+    [Migration("20200925144408_Changemigrations")]
+    partial class Changemigrations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

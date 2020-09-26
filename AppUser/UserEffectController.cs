@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MetanoiaCoreAPI.AppUser;
 using MetanoiaCoreAPI.Infa;
 //using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,50 +14,59 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MetanoiaCoreAPI.Controllers
 {
-    [Route("/userpsychologyeffects")]
+    [Route("userpsychologyeffects")]
     [ApiController]
     public class UserPsychologyEffectsController : ControllerBase
     {
-        private readonly UserPsychologyEffectsContext _context;
+        private readonly AppDbContext _context;
 
-        public UserPsychologyEffectsController(UserPsychologyEffectsContext context)
+        public UserPsychologyEffectsController(AppDbContext context)
         {
             _context = context;
         }
 
+        [HttpPost]
+        public async Task<ActionResult> PostUserPsychologyEffects(UserPsychologyEffects userEffect)
+        {
+            _context.UserPsychologyEffects.Add(userEffect);
+            await _context.SaveChangesAsync();
+
+            return StatusCode(201);
+        }
+
         // GET: api/TodoItems
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserPsychologyEffectsContext>>> GetUserPsychologyEffects()
+        public List<UserPsychologyEffects> GetUserPsychologyEffects()
         {
-            return await _context.UserPsychologyEffects.ToListAsync();
+            return _context.UserPsychologyEffects.ToList();
         }
 
         // GET: api/TodoItems/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<UserPsychologyEffectsContext>> GetUserPsychologyEffects(long id)
-        {
-            var userEffects  = await _context.UserPsychologyEffects.FindAsync(id);
+        // [HttpGet("{id}")]
+        // public async Task<ActionResult<AppDbContext>> GetUserPsychologyEffects(long id)
+        // {
+        //     var userEffects  = await _context.UserPsychologyEffects.FindAsync(id);
 
-            if ( userEffects == null)
-            {
-                return NotFound();
-            }
+        //     if ( userEffects == null)
+        //     {
+        //         return NotFound();
+        //     }
 
-            return userEffects;
-        }
+        //     return Ok();
+        // }
 
         // PUT: api/TodoItems/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserPsychologyEffects(long id, UserPsychologyEffectsContext userEffects)
+        public async Task<IActionResult> PutUserPsychologyEffects(long id, AppDbContext AppDbContext)
         {
-            if (id != userEffects.ID)
+            if (id != AppDbContext.ID)
             {
                 return BadRequest();
             }
 
-            _context.Entry(userEffects).State = EntityState.Modified;
+            _context.Entry(AppDbContext).State = EntityState.Modified;
 
             try
             {
@@ -80,18 +90,11 @@ namespace MetanoiaCoreAPI.Controllers
         // POST: api/TodoItems
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
-        public async Task<ActionResult<UserPsychologyEffectsContext>> PostUserPsychologyEffects(UserPsychologyEffectsContext userEffects)
-        {
-            _context.UserPsychologyEffects.Add(userEffects);
-            await _context.SaveChangesAsync();
-
-            return StatusCode(201);
-        }
+        
 
         // DELETE: api/TodoItems/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<UserPsychologyEffectsContext>> DeleteUserPsychologyEffects(long id)
+        public async Task<ActionResult<AppDbContext>> DeleteUserPsychologyEffects(long id)
         {
             var userEffects = await _context.UserPsychologyEffects.FindAsync(id);
             if (userEffects == null)
@@ -102,7 +105,7 @@ namespace MetanoiaCoreAPI.Controllers
             _context.UserPsychologyEffects.Remove(userEffects);
             await _context.SaveChangesAsync();
 
-            return userEffects;
+            return Ok();
         }
 
        private bool UserPsychologyEffectsExists(long id)

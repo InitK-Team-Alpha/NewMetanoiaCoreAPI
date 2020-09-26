@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using MetanoiaCoreAPI.Infa;
 using Microsoft.AspNetCore.Mvc;
@@ -12,33 +13,33 @@ namespace MetanoiaCoreAPI.AdminUser
     public class AdminUserController : ControllerBase
     {
 
-        private readonly AdminUserContext _context;
-        public AdminUserController(AdminUserContext context)
+        private readonly AppDbContext _context;
+        public AdminUserController(AppDbContext context)
         {
-            // Console.WriteLine("called");
+            
             _context = context;
         }
+        
         [HttpPost]
-        public ActionResult PostAdminUser([FromBody] AdminUserDTO adminUserDTO)
+        public async Task<ActionResult> PostAdminUser([FromBody] AdminUserDTO adminUser)
         {
 
-            Console.WriteLine(adminUserDTO);
-            return Ok(adminUserDTO);
+            await _context.AdminUserDTOs.AddAsync(adminUser);
+            await _context.SaveChangesAsync();
+            return Ok();
         }
 
 
         [HttpGet]
-        //public ActionResult GetAdminUser ([FromBody] AdminUserDTO adminUserDTO)
 
-        public async Task<ActionResult<AdminUserDTO>> GetAdminUsersDTO(long id)
-        {
-            Console.WriteLine(id);
-            return Ok(id);
-        }
+       public List<AdminUserDTO> GetAppUser()
+       {
+           return _context.AdminUserDTOs.ToList();
+       }
 
         [HttpDelete("{id}")]
 
-        public async Task<ActionResult<AdminUserContext>> DeleteAdminUser(long id)
+        public async Task<ActionResult<AppDbContext>> DeleteAdminUser(long id)
         {
             var adminUserDTO = await _context.AdminUserDTOs.FindAsync(id);
             if (adminUserDTO == null)
@@ -48,7 +49,7 @@ namespace MetanoiaCoreAPI.AdminUser
             _context.AdminUserDTOs.Remove(adminUserDTO);
             await _context.SaveChangesAsync();
 
-            return adminUserDTO;
+            return Ok();
         }
 
 

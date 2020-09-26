@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MetanoiaCoreAPI.AppUser;
 using MetanoiaCoreAPI.Infa;
 //using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,39 +16,48 @@ namespace MetanoiaCoreAPI.Controllers
     [ApiController]
     public class UserPsychologyCausesController : ControllerBase
     {
-        private readonly UserPsychologyCausesContext _context;
+        private readonly AppDbContext _context;
 
-        public UserPsychologyCausesController(UserPsychologyCausesContext context)
+        public UserPsychologyCausesController(AppDbContext context)
         {
             _context = context;
         }
 
+         [HttpPost]
+        public async Task<ActionResult> PostUserPsychologyCauses(UserPsychologyCauses usercause)
+        {
+            _context.UserPsychologyCauses.Add(usercause);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
         // GET: api/TodoItems
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserPsychologyCausesContext>>> GetUserPsychologyCauses()
+        public List<UserPsychologyCauses> GetUserPsychologyCauses()
         {
-            return await _context.UserPsychologyCauses.ToListAsync();
+            return _context.UserPsychologyCauses.ToList();
         }
 
         // GET: api/TodoItems/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<UserPsychologyCausesContext>> GetUserPsychologyCauses(long id)
-        {
-            var userCauses  = await _context.UserPsychologyCauses.FindAsync(id);
+        // [HttpGet("{id}")]
+        // public async Task<ActionResult<AppDbContext>> GetUserPsychologyCauses(long id)
+        // {
+        //     var userCauses  = await _context.UserPsychologyCauses.FindAsync(id);
 
-            if ( userCauses == null)
-            {
-                return NotFound();
-            }
+        //     if ( userCauses == null)
+        //     {
+        //         return NotFound();
+        //     }
 
-            return userCauses;
-        }
+        //     return Ok();
+        // }
 
         // PUT: api/TodoItems/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserPsychologyCauses(long id, UserPsychologyCausesContext userCauses)
+        public async Task<IActionResult> PutUserPsychologyCauses(long id, AppDbContext userCauses)
         {
             if (id != userCauses.ID)
             {
@@ -78,18 +88,11 @@ namespace MetanoiaCoreAPI.Controllers
         // POST: api/TodoItems
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
-        public async Task<ActionResult<UserPsychologyCausesContext>> PostUserPsychologyCauses(UserPsychologyCausesContext userCauses)
-        {
-            _context.UserPsychologyCauses.Add(userCauses);
-            await _context.SaveChangesAsync();
-
-            return StatusCode(201);
-        }
+       
 
         // DELETE: api/TodoItems/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<UserPsychologyCausesContext>> DeleteUserPsychologyCauses(long id)
+        public async Task<ActionResult<AppDbContext>> DeleteUserPsychologyCauses(long id)
         {
             var userCauses = await _context.UserPsychologyCauses.FindAsync(id);
             if (userCauses == null)
@@ -100,7 +103,7 @@ namespace MetanoiaCoreAPI.Controllers
             _context.UserPsychologyCauses.Remove(userCauses);
             await _context.SaveChangesAsync();
 
-            return userCauses;
+            return Ok();
         }
 
        private bool UserPsychologyCausesExists(long id)

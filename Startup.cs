@@ -29,7 +29,7 @@ namespace test_project2
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<AdminUserContext>(opt =>
+            services.AddDbContext<AppDbContext>(opt =>
             opt.UseSqlite("Data Source=Metanoia.db"));
         }
 

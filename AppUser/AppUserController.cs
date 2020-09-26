@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MetanoiaCoreAPI.AppUser;
 using MetanoiaCoreAPI.Infa;
 //using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,46 +17,55 @@ namespace MetanoiaCoreAPI.Controllers
     [ApiController]
     public class AppUserController : ControllerBase
     {
-        private readonly AppUserContext _context;
+        private readonly AppDbContext _context;
 
-        public AppUserController(AppUserContext context)
+        public AppUserController(AppDbContext context)
         {
             _context = context;
         }
 
+          [HttpPost]
+        public async Task<ActionResult> PostAppUser ([FromBody] AppUserDTO appUser) 
+        {
+            await _context.AppUserDTOs.AddAsync(appUser);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
         // GET: api/TodoItems
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AppUserContext>>> GetAppUserDTOs()
+        public List<AppUserDTO> GetAppUser()
         {
-            return await _context.AppUserDTOs.ToListAsync();
+            return _context.AppUserDTOs.ToList();
         }
 
         // GET: api/TodoItems/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<AppUserContext>> GetAppUser(long id)
-        {
-            var appuser  = await _context.AppUserDTOs.FindAsync(id);
+        // [HttpGet("{id}")]
+        // public async Task<ActionResult<AppDbContext>> GetAppUser(long id)
+        // {
+        //     var appuser  = await _context.AppUserDTOs.FindAsync(id);
 
-            if (appuser == null)
-            {
-                return NotFound();
-            }
+        //     if (appuser == null)
+        //     {
+        //         return NotFound();
+        //     }
 
-            return appuser;
-        }
+        //     return Ok();
+        // }
 
         // PUT: api/TodoItems/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAppUser(long id, AppUserContext appuser)
+        public async Task<IActionResult> PutAppUser(long id, AppDbContext appUser)
         {
-            if (id != appuser.ID)
+            if (id != appUser.ID)
             {
                 return BadRequest();
             }
 
-            _context.Entry(appuser).State = EntityState.Modified;
+            _context.Entry(appUser).State = EntityState.Modified;
 
             try
             {
@@ -79,29 +89,22 @@ namespace MetanoiaCoreAPI.Controllers
         // POST: api/TodoItems
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
-        public async Task<ActionResult<AppUserContext>> PostAppUser(AppUserContext appuser)
-        {
-            _context.AppUserDTOs.Add(appuser);
-            await _context.SaveChangesAsync();
-
-            return StatusCode(201);
-        }
+      
 
         // DELETE: api/TodoItems/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<AppUserContext>> DeleteAppUser(long id)
+        public async Task<ActionResult<AppDbContext>> DeleteAppUser(long id)
         {
-            var appuser = await _context.AppUserDTOs.FindAsync(id);
-            if (appuser == null)
+            var appUser = await _context.AppUserDTOs.FindAsync(id);
+            if (appUser == null)
             {
                 return NotFound();
             }
 
-            _context.AppUserDTOs.Remove(appuser);
+            _context.AppUserDTOs.Remove(appUser);
             await _context.SaveChangesAsync();
 
-            return appuser;
+            return Ok();
         }
 
        private bool AppUserExists(long id)
