@@ -1,28 +1,20 @@
-using Microsoft.EntityFrameworkCore;
-using MetanoiaCoreAPI.AppUser;
 using MetanoiaCoreAPI.AdminUser;
+using MetanoiaCoreAPI.AppUser;
+using Microsoft.EntityFrameworkCore;
 
 namespace MetanoiaCoreAPI.Infa
 {
-
     public class AppDBContext : DbContext
     {
-        public AppDBContext(DbContextOptions<AppDBContext> opt) : base(opt)
-        { }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        public AppDBContext(DbContextOptions<AppDBContext> options) : base(options)
         {
-            modelBuilder.ApplyConfiguration(new AppUserConfiguration());
-            modelBuilder.ApplyConfiguration(new AdminUserConfiguration());
 
-            base.OnModelCreating(modelBuilder);
+
         }
-
-        DbSet<AppUserDTO> AppUsers { get; set; }
-
-        DbSet<AdminUserDTO> AdminUsers { get; set; }
-
-
+        public DbSet<AdminUserDTO> AdminUserDTOs {get;set;}
+        public DbSet<AppUserDTO> AppUsersDTos{get; set;}
+        public DbSet<UserPsychologyCauses> PsychologyCausess{get; set;}
+        public DbSet<UserPsychologyEffects> PsychologyEffectss{get; set;}
+      
     }
-
 }

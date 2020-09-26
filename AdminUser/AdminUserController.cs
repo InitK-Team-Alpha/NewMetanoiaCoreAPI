@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using MetanoiaCoreAPI.Infa;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,37 +13,29 @@ namespace MetanoiaCoreAPI.AdminUser
     public class AdminUserController : ControllerBase
     {
 
-        private readonly AdminUserContext _context;
-        public AdminUserController(AdminUserContext context)
+        private readonly AppDBContext _context;
+        public AdminUserController(AppDBContext context)
         {
-            Console.WriteLine("called");
             _context = context;
         }
         [HttpPost]
-        public ActionResult PostAdminUser([FromBody] AdminUserDTO adminUserDTO)
+        public async Task<ActionResult> PostAdminUser([FromBody] AdminUserDTO adminUser)
         {
-            // _context.AdminUserDTOs.Add(adminUserDTO);
-            // await _context.SaveChangesAsync();
+            await _context.AdminUserDTOs.AddAsync(adminUser);
+            await _context.SaveChangesAsync();
 
-            // return CreatedAtAction(nameof(GetAdminUserDTO), new { id = adminUserDTO.ID }, adminUserDTO);
-            Console.WriteLine(adminUserDTO);
+            //return CreatedAtAction("GetTodoItem", new { id = todoItem.Id }, todoItem);
             return Ok();
         }
+
 
 
         [HttpGet]
-
-        public async Task<ActionResult<AdminUserDTO>> GetAdminUsersDTO(long id)
+        public List<AdminUserDTO> GetAdminUser()
         {
-            // var adminUserDTO = await _context.AdminUserDTOs.FindAsync(id);
-            // if (adminUserDTO == null)
-            // {
-            //     return NotFound();
-            // }
-
-            // return adminUserDTO;
-            return Ok();
+            return _context.AdminUserDTOs.ToList();
         }
+
         [HttpDelete("{id}")]
 
         public async Task<ActionResult<AdminUserDTO>> DeleteAdminUser(long id)
@@ -56,8 +50,6 @@ namespace MetanoiaCoreAPI.AdminUser
 
             return adminUserDTO;
         }
-        // Console.WriteLine("adminUserDTO");
-        // return Accepted();
 
 
         [HttpPut("{id}")]
@@ -88,7 +80,6 @@ namespace MetanoiaCoreAPI.AdminUser
             return NoContent();
 
         }
-
         private bool AdminUserDTOExists(long id)
         {
             throw new NotImplementedException();

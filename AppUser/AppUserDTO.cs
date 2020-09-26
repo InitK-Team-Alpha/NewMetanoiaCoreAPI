@@ -38,7 +38,7 @@ namespace MetanoiaCoreAPI.AppUser
 
         public AppUserRelationshipStatus RelationshipStatus { get; set; }
 
-        public List<string> Hobbies { get; set; }
+        public string Hobbies { get; set; }
 
         public string Religion {get;set;}
 
@@ -64,7 +64,7 @@ namespace MetanoiaCoreAPI.AppUser
             builder.Property(p => p.Gender).HasColumnType("varchar(12)").IsRequired();
             builder.Property(p => p.JobRole).HasColumnType("varchar(200)").IsRequired();
             builder.Property(p => p.RelationshipStatus).HasColumnType("varchar(14)").IsRequired();
-            builder.Property(p => p.Hobbies).HasColumnName("text[]").IsRequired();
+            builder.Property(p => p.Hobbies).HasColumnName("varchar(200)").IsRequired();
             builder.Property(p => p.Religion).HasColumnName("varchar(30)").IsRequired();
 
             builder.Property(p => p.CreatedDate).HasColumnType("date").HasDefaultValueSql("GETDATE()");

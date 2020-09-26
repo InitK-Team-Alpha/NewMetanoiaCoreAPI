@@ -14,20 +14,17 @@ namespace MetanoiaCoreAPI.AdminUser
 
     public class AdminUserDTO
     {
+      
 
-        public int ID { get; set; }
-
+       public int ID { get; set; }
+        
         public string UserName { get; set; }
 
         public string Password { get; set; }
 
         public AdminRole Role { get; set; }
 
-        internal static List<AdminUserDTO> ToList()
-        {
-            throw new NotImplementedException();
-        }
-    }
+      
 
     public class AdminUserConfiguration : IEntityTypeConfiguration<AdminUserDTO>
     {
@@ -45,4 +42,6 @@ namespace MetanoiaCoreAPI.AdminUser
     }
 
 
+    }
 }
+

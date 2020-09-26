@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MetanoiaCoreAPI.AdminUser;
+using MetanoiaCoreAPI.Infa;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,8 +29,9 @@ namespace test_project2
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<AdminUserContext>(opt =>
-            opt.UseInMemoryDatabase("Metanoia"));
+            services.AddDbContext<AppDBContext>(opt =>
+            opt.UseSqlite("Data Source = Metanoia.db"));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
