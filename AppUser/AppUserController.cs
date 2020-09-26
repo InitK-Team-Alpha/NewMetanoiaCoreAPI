@@ -4,6 +4,8 @@ using MetanoiaCoreAPI.Infa;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MetanoiaCoreAPI.AppUser;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MetanoiaCoreAPI.AdminUser
 {
@@ -15,44 +17,51 @@ namespace MetanoiaCoreAPI.AdminUser
         private readonly AppDBContext _context;
         public AppUserController(AppDBContext context)
         {
-            Console.WriteLine("OK");
             _context = context;
         }
-        [HttpPost]
-        public ActionResult PostAppUser([FromBody] AppUserDTO appUserDTO)
+         [HttpPost]
+        public async Task<IActionResult> PostAdminUser([FromBody] AppUserDTO appuser)
         {
-            // _context.AdminUserDTOs.Add(adminUserDTO);
-            // await _context.SaveChangesAsync();
+            Console.WriteLine("Post Success");
+            await _context.AppUsers.AddAsync(appuser);
+            await _context.SaveChangesAsync();
+            return Ok();
 
-            // return CreatedAtAction(nameof(GetAdminUserDTO), new { id = adminUserDTO.ID }, adminUserDTO);
-            Console.WriteLine("Post Method");
-            return Ok(appUserDTO);
         }
 
-        [HttpGet]
-        
-          public ActionResult GetAppUsersDTO([FromQuery]long id)
+       [HttpGet]
+        public List<AppUserDTO> GetAdminUsers()
+        {
+            return _context.AppUsers.ToList();
+        }
+       
+
+
+       [HttpDelete("{id}")]
+
+        public async Task<ActionResult<AppUserDTO>> DeleteAppUser(long id)
         {
 
-            Console.WriteLine("Get Method");
-            return Ok(id);
+
+            var userdelete = await _context.AppUsers.FindAsync(id);
+            if (userdelete == null)
+            {
+                return NotFound();
+            }
+
+            //_context.AdminUserDTOs.Remove(userdelete);
+            await _context.SaveChangesAsync();
+
+            return userdelete;
+
         }
-
-        [HttpDelete]
-        public ActionResult Deleteappuser([FromQuery] long id)
-        {
-
-            Console.WriteLine("Delete Method");
-            return Ok(id);
-        }
-
         [HttpPut]
         public async Task<IActionResult> PutAppUser(long id, AppUserDTO appUserDTO)
         {
             Console.WriteLine("Put Method");
             return Ok(id);
         }
-         private bool AdminUserDTOExists(long id)
+        private bool AdminUserDTOExists(long id)
         {
             throw new NotImplementedException();
         }

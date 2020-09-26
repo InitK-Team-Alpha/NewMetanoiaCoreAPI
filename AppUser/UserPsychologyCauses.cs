@@ -34,7 +34,7 @@ namespace MetanoiaCoreAPI.AppUser
     {
         public void Configure(EntityTypeBuilder<UserPsychologyCauses> builder)
         {
-            builder.ToTable("appuser");
+            builder.ToTable("causes");
 
             builder.HasKey(p => p.ID);
             builder.Property(p => p.RelationshipProblem).HasColumnType("varchar(10)").IsRequired();

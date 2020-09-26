@@ -14,17 +14,20 @@ namespace MetanoiaCoreAPI.Infa
         {
             modelBuilder.ApplyConfiguration(new AppUserConfiguration());
             modelBuilder.ApplyConfiguration(new AdminUserConfiguration());
+            modelBuilder.ApplyConfiguration(new UserPsychologyCausesConfiguration());
+            modelBuilder.ApplyConfiguration(new UserPsychologyEffectsConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
 
-        DbSet<AppUserDTO> AppUsers { get; set; }
+        public DbSet<AppUserDTO> AppUsers { get; set; }
 
-        DbSet<AdminUserDTO> AdminUserDTOs{ get; set; }
+        public DbSet<AdminUserDTO> AdminUserDTOs { get; set; }
 
-        DbSet <UserPsychologyCauses> UserPsychologyCause{get;set;}
-        DbSet <UserPsychologyEffects> UserPsychologyEffect{get; set;}
+        public DbSet<UserPsychologyCauses> UserPsychologyCause { get; set; }
+        public DbSet<UserPsychologyEffects> UserPsychologyEffect { get; set; }
         public object AdminUserDTO { get; internal set; }
+        //public object AppUserDTO{get; internal set;}
     }
 
 }

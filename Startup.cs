@@ -31,7 +31,7 @@ namespace test_project2
         {
             services.AddControllers();
             services.AddDbContext<AppDBContext>(opt =>
-            opt.UseSqlite("Data Source=Metanoia.db"));
+            opt.UseSqlite("Data Source=Metanoia1.db"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

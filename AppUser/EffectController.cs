@@ -4,6 +4,8 @@ using MetanoiaCoreAPI.Infa;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MetanoiaCoreAPI.AppUser;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace MetanoiaCoreAPI.AdminUser
 {
@@ -15,44 +17,71 @@ namespace MetanoiaCoreAPI.AdminUser
         private readonly AppDBContext _context;
         public  EffectController(AppDBContext context)
         {
-            Console.WriteLine("OK");
             _context = context;
         }
         [HttpPost]
-        public ActionResult PostAppUser([FromBody]UserPsychologyEffects effects)
+        public async Task<ActionResult> PostEffects([FromBody] UserPsychologyEffects causes)
         {
-            // _context.AdminUserDTOs.Add(adminUserDTO);
-            // await _context.SaveChangesAsync();
+            await _context.UserPsychologyEffect.AddAsync(causes);
+            await _context.SaveChangesAsync();
+            return Ok();
 
-            // return CreatedAtAction(nameof(GetAdminUserDTO), new { id = adminUserDTO.ID }, adminUserDTO);
-            Console.WriteLine("Post Method");
-            return Ok(effects);
+
         }
 
         [HttpGet]
-        
-          public ActionResult GetAppUsersDTO([FromQuery]long id)
+        public List<UserPsychologyEffects> GetEffects()
         {
-
-            Console.WriteLine("Get Method");
-            return Ok(id);
+            return _context.UserPsychologyEffect.ToList();
         }
 
-        [HttpDelete]
-        public ActionResult Deleteappuser([FromQuery] long id)
-        {
+        [HttpDelete("{id}")]
 
-            Console.WriteLine("Delete Method");
-            return Ok(id);
+        public async Task<IActionResult> DeleteUserEffects([FromQuery] int id)
+        {
+            var admin = await _context.UserPsychologyEffect .FindAsync(id);
+            if (admin == null)
+            {
+                return NotFound();
+            }
+            Console.WriteLine("Ok");
+
+           var admin1= _context.UserPsychologyEffect .Remove(admin);
+            await _context.SaveChangesAsync();
+
+            return Ok(admin1);
+
         }
 
-        [HttpPut]
-        public async Task<IActionResult> PutAppUser(long id, UserPsychologyCauses appUserDTO)
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutUserEffects(long id, UserPsychologyEffects cause)
         {
-            Console.WriteLine("Put Method");
-            return Ok(id);
+            if (id != cause.ID)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(cause).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UserPsychologyEffectsExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return NoContent();
         }
-         private bool AdminUserDTOExists(long id)
+        private bool UserPsychologyEffectsExists(long id)
         {
             throw new NotImplementedException();
         }

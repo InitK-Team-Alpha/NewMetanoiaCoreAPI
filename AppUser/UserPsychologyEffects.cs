@@ -44,13 +44,11 @@ namespace MetanoiaCoreAPI.AppUser
         public bool MoodSwing {get; set;}
 
     }
-
-
      public class UserPsychologyEffectsConfiguration : IEntityTypeConfiguration<UserPsychologyEffects>
     {
         public void Configure(EntityTypeBuilder<UserPsychologyEffects> builder)
         {
-            builder.ToTable("appuser");
+            builder.ToTable("efffects");
 
             builder.HasKey(p => p.ID);
             builder.Property(p => p.SleepProblem).HasColumnType("varchar(10)").IsRequired();

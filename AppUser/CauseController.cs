@@ -4,6 +4,8 @@ using MetanoiaCoreAPI.Infa;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MetanoiaCoreAPI.AppUser;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace MetanoiaCoreAPI.AdminUser
 {
@@ -15,43 +17,72 @@ namespace MetanoiaCoreAPI.AdminUser
         private readonly AppDBContext _context;
         public CauseController(AppDBContext context)
         {
-            Console.WriteLine("OK");
+
             _context = context;
         }
         [HttpPost]
-        public ActionResult PostAppUser([FromBody] UserPsychologyCauses causes)
+        public async Task<ActionResult> PostAdminUser([FromBody] UserPsychologyCauses causes)
         {
-            // _context.AdminUserDTOs.Add(adminUserDTO);
-            // await _context.SaveChangesAsync();
+            await _context.UserPsychologyCause.AddAsync(causes);
+            await _context.SaveChangesAsync();
+            return Ok();
 
-            // return CreatedAtAction(nameof(GetAdminUserDTO), new { id = adminUserDTO.ID }, adminUserDTO);
-            Console.WriteLine("Post Method");
-            return Ok(causes);
+
         }
 
         [HttpGet]
-        
-          public ActionResult GetAppUsersDTO([FromQuery]long id)
+        public List<UserPsychologyCauses> GetCauses()
         {
-
-            Console.WriteLine("Get Method");
-            return Ok(id);
+            return _context.UserPsychologyCause.ToList();
         }
 
-        [HttpDelete]
-        public ActionResult Deletec([FromQuery] long id)
-        {
+        [HttpDelete("{id}")]
 
-            Console.WriteLine("Delete Method");
-            return Ok(id);
-        }
-        [HttpPut]
-        public async Task<IActionResult> PutAppUser(long id)
+        public async Task<IActionResult> DeleteUserCauses([FromQuery] int id)
         {
-            Console.WriteLine("Put Method");
-            return Ok(id);
+            var admin = await _context.UserPsychologyCause .FindAsync(id);
+            if (admin == null)
+            {
+                return NotFound();
+            }
+            Console.WriteLine("Ok");
+
+           var admin1= _context.UserPsychologyCause .Remove(admin);
+            await _context.SaveChangesAsync();
+
+            return Ok(admin1);
+
         }
-         private bool AdminUserDTOExists(long id)
+
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutUserCauses(long id, UserPsychologyCauses cause)
+        {
+            if (id != cause.ID)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(cause).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UserPsychologyCausesExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return NoContent();
+        }
+        private bool UserPsychologyCausesExists(long id)
         {
             throw new NotImplementedException();
         }
